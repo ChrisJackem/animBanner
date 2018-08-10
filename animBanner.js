@@ -81,7 +81,7 @@ function Animate( d, DATA ){
 
   var _ID = d.getAttribute('id');
   styles += "\n#" + _ID + "{animation-name: " + _ID + ";\n";
-  styles += "animation-duration: " + "1s" + ";}\n";
+  styles += "animation-duration: " + DATA[2] + ";}\n";
   styles += parseCss( _ID, str_property, str_start, str_finish );
 
 
