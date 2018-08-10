@@ -1,8 +1,13 @@
 @charset "utf-8";
 /* CSS Document */
 
-#blue{
+#ble{
 	background-color: #0D15A4;
+	width: 200px;
+	height: 200px;
+}
+#grn{
+	background-color: #3DB912;
 	width: 200px;
 	height: 200px;
 }
