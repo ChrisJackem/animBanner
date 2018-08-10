@@ -14,7 +14,7 @@ window.onload = function(){
 	// New styles for animations
 	css = document.createElement("style")
 	css.type = "text/css";
-	styles = '#header { color: #555 }';
+	styles = '';
 
 	init();
 	
@@ -45,9 +45,12 @@ function Animate( d, DATA ){
   var vals = DATA[1].split("_");
   var dataStr = "";
 
+
   var str_property = "background-color";
   var str_start = "red";
   var str_finish = "yellow";
+
+
 
   // animation type 
   switch(animType){
@@ -78,16 +81,26 @@ function Animate( d, DATA ){
   	 console.log("Error - cant find animation " + animType);
   	 break;
   }//s
-
+/*
+  animation-duration: 1.5s; 
+  animation-timing-function: ease-out; 
+  animation-delay: 0s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-fill-mode: none;
+  animation-play-state: running; 
+*/
   var _ID = d.getAttribute('id');
   styles += "\n#" + _ID + "{animation-name: " + _ID + ";\n";
-  styles += "animation-duration: " + DATA[2] + ";}\n";
+  styles += "animation-duration: " + DATA[2] + ";\n";  
+  styles += "animation-timing-function: linear;\n";
+  styles += "animation-iteration-count: infinite;}\n";
   styles += parseCss( _ID, str_property, str_start, str_finish );
-
 
 }
 
 // Helpers ---------------------------------------------------------------
+
 function embedToBG(par){
 	var imgChild = par.getElementsByTagName("img")[0];
 	var imgStyle = 'background-image: url("' + refineSource(imgChild.src) +'"); ';
