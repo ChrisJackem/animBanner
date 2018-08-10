@@ -44,17 +44,20 @@ function Animate( d, DATA ){
   var direction = "init";
   var animType = DATA[0].toLowerCase();
   var vals = DATA[1];
+  var dataStr = "";
 
-  // 1 - animation type 
+  var str_property = "background-color";
+  var str_start = "red";
+  var str_finish = "yellow";
+
+  // animation type 
   switch(animType){
 
   	case "scroll_x":
-  		direction = "x";
-
-  		break;
-
   	case "scroll_y":
-		direction = "y";
+  		direction = (animType=="scroll_x")?"x":"y";
+  		str_property = "background-position";
+  		str_start = "background-position";
   		break;
 
   	case "fade":
@@ -64,30 +67,14 @@ function Animate( d, DATA ){
   	case "rotate":
 
   		break;
-  }
 
-  // 2 - Values
-  if (vals.length > 0){
-  	var valsSplit = vals.split("_");
-  	refineData(vals);
-  }
-
-  //console.log(DATA + " scroll " + scroll);
+  	default:
+  	 console.log("Error - cant find animation " + animType);
+  	 break;
+  }//s
 }
 
 // Helpers ---------------------------------------------------------------
-
-function refineData(v){
-
-	var _split = v.split("_");
-	for (var i=0; i<_split.length; i++){
-		if (  !isNaN( Number(_split[i]) ) ){
-		 console.log( _split[i] + " number");
-		}else{
-			console.log( _split[i] + " str" );
-		}
-	}
-}
 
 function getDivData(d){
 	var da = d.getAttribute("data-anim");
