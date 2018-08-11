@@ -8,6 +8,7 @@ var css;
 var styles;
 
 var DEBUG = true;
+var curZ = 10;
 var master = {};
 var defaults = {
 // custom
@@ -102,18 +103,30 @@ function Animate( d, DATA ){
   			imgDiv.id = _ID;
   			d = imgDiv;
   	
-  		myObj['height'] = + imgHeight + "px; ";
+  		//myObj['height'] = + imgHeight + "px; ";
 		myObj['background-image'] ='url("' + imgSrc +'");';		
+		//myObj['background-size'] = 'cover';		
 		myObj['animation-prop'] = "background-position";
 		myObj['animation-timing-function'] = 'linear';
 		myObj['animation-iteration-count'] = 'infinite';
-		
+
+		myObj['position'] = 'absolute';
+		myObj['left'] = '0px';
+		myObj['top'] = '0px';
+		myObj['width'] = '100%';
+		myObj['height'] = '100%';
+		myObj['z-index'] = curZ++;
+
 	  	if (animType == "scroll_x"){	 		
 	  		myObj['animation-start'] = vals[0] + " 0px";
 	  		myObj['animation-end'] = vals[1] + " 0px";
+	  		myObj['background-repeat'] ='repeat-x';		
+		
+
 	  	}else{
 	  		myObj['animation-start'] = "0px " + vals[0];
 	  		myObj['animation-end'] = "0px " + vals[1] ;
+	  		myObj['background-repeat'] ='repeat-y';
 		}
   	break;
   	
@@ -125,7 +138,12 @@ function Animate( d, DATA ){
   		break;
 
   	case "rotate":
-
+  		myObj['animation-prop'] = "transform";
+  		myObj['animation-start'] = 'rotate('+ vals[0] + ');';
+  		myObj['animation-end'] = 'rotate('+ vals[1] + ');';
+  		myObj['animation-timing-function'] = 'linear';
+  		myObj['animation-iteration-count'] = 'infinite';
+  		myObj['transform-origin'] = 'center center';
   	break;
 
   	default:

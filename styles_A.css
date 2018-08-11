@@ -3,23 +3,47 @@
 .testContainer{
 	display: block;
 	position: relative;
-	height: 1080px;
+	height: 800px;
 	width: 100%;
 }
-.testContainer > div{	
+/*.testContainer > div{	
 	position: absolute;
 	left: 0px;
 	width: 100%;
+}*/
+
+.filled{
+	width: 100%;
+	height: auto;
 }
+
+
+
+
+/*********   Car   ************/
 #car{
-	width: 35%;
-	height: 75%;
+
+	width: auto ;
 	z-index: 99;
+	position: absolute;
+	right: 10%;
+	bottom: 10%;
 }
-#car > *{
-	width: auto;
+#car > *{width: 100%;}
+#shocks{
+	position: absolute;
+	bottom: -5%;/* Shock Height*/
+	height: 38%;
+}
+.wheel{
+	position: absolute;	
+	height: 100%;
 	
 }
+/* Wheel position*/
+#wheelR{ right:7%; }
+#wheelF{ left:12%; }
+
 
 #ble{
 	background-color: #0D15A4;
