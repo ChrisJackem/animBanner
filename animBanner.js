@@ -27,30 +27,29 @@ var defaults = {
   'animation-fill-mode': 'none',
   'animation-play-state': 'running'
 };
-/*
- 
-*/
+
+var exclude_from_css = {
+  'animation-prop':'X',
+  'animation-end':'X',
+  'animation-start':'X'
+};
 
 
 window.onload = function(){
-	var css,styles;
-	init();
 	
-//console.log(master["bush"]);
-var css = document.createElement("style");
-    css.type = "text/css";
-var styles = '';
+	init();
 
-	for (var obj in master){
-		// New styles for animations
-		var _obj = master[obj];
-		
-		
-		styles = '#' + _obj['animation-name'] + '{';
+	// New styles for animations
+	var css = document.createElement("style");
+	css.type = "text/css";
+	var styles = '';
 
+	for (var obj in master){		
+		var _obj = master[obj];		
+		styles = '\n#' + _obj['animation-name'] + '{';
 		for (var prop in _obj){
 			var val = _obj[prop];
-			styles += prop + ':' + val + ';';
+			if (!exclude_from_css.hasOwnProperty(prop)) styles += prop + ':' + val + ';';
 		}
 		styles += "}" + parseCss(_obj['animation-name'],
 		                         _obj['animation-prop'],
@@ -58,27 +57,24 @@ var styles = '';
 		                         _obj['animation-end']);
 		
 		// Add to style sheet
-		if (css.styleSheet) css.styleSheet.cssText = styles;
+		if (css.styleSheet) css.styleSheet.insertRule(styles);
 		else css.appendChild(document.createTextNode(styles));
+		//console.log(styles);
 	}
 	// Add css to doc
 	document.getElementsByTagName("head")[0].appendChild(css);
 }
 
 
-function init(){
-	animDivs = document.getElementsByTagName( "div" );
-	animDivs.concat(document.getElementsByTagName( "img" ));
-	
-	for (var i=0; i<animDivs.length;i++){
-		var _D = getDivData(animDivs[i]);
-		// Make sure we have data
-		if ((typeof _D[0]) == "string") Animate(animDivs[i], _D);
-		// ok
-	}//f
+function init(){	
+	var Ds = Array.prototype.slice.call(document.getElementsByTagName( "div" ) );
+	var Is = Array.prototype.slice.call(document.getElementsByTagName( "img" ) );
+	var animDivs = Ds.concat(Is);
+	for (var a in animDivs){
+		var _D = getDivData(animDivs[a]);
+		if ((typeof _D[0]) == "string") Animate(animDivs[a], _D);
+	}
 }
-
-
 
 function Animate( d, DATA ){
 
@@ -95,34 +91,25 @@ function Animate( d, DATA ){
 
   	//==================== Scroll =========================
   	case "scroll_x":
-	case "scroll_y":
-  		var imgChilds = d.getElementsByTagName("img");
-  		var imgChildStr = "";
-  		//console.log(imgChilds)
-  		var imgHeight = imgChilds[0].clientHeight;
-  		for (var imgC in imgChilds){
-  			var sou = imgChilds[imgC].src;
-  			console.log(sou)
-			//imgChildStr += refineSource(imgChilds[imgC].src);
-			//d.removeChild(imgChilds[imgC]);
-			//if (imgChilds.length >= 1 && I < imgChilds.length-1) imgChildStr += ',';
-			
-  		}
+	case "scroll_y":  		
 
-  		if (myObj['background-image'] != undefined){
-  			var index = myObj['background-image'].length - 2;
-  			myObj['background-image'] = myObj['background-image'].splice(index,0, "," + imgChildStr);
-  		}else{
-  			myObj['background-image'] ='url("' + imgChildStr +'");';
-  		}
-
-		
-		myObj['height'] = + imgHeight + "px; ";
+  		// Replace image with div and transfer atts (you will never know)
+  		var imgParent = document.getElementById(_ID).parentElement;
+  		var imgHeight = d.clientHeight;
+  		var imgWidth = d.clientWidth;  		
+  		var imgSrc = refineSource(d.src);
+  		var imgDiv = document.createElement("div");
+  			if (imgDiv.className != null) imgDiv.className = d.className;  			
+  			imgParent.replaceChild(imgDiv, document.getElementById(_ID) );
+  			imgDiv.id = _ID;
+  			d = imgDiv;
+  	
+  		myObj['height'] = + imgHeight + "px; ";
+		myObj['background-image'] ='url("' + imgSrc +'");';		
 		myObj['animation-prop'] = "background-position";
-		//myObj['animation-timing-function'] = 'linear';
+		myObj['animation-timing-function'] = 'linear';
 		myObj['animation-iteration-count'] = 'infinite';
 		
-
 	  	if (animType == "scroll_x"){	 		
 	  		myObj['animation-start'] = vals[0] + " 0px";
 	  		myObj['animation-end'] = vals[1] + " 0px";
