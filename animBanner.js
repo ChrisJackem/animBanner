@@ -8,23 +8,61 @@ var css;
 var styles;
 
 var DEBUG = true;
+var master = {};
+var defaults = {
+// custom
+  'background-image':'none',
+  'height':'100%',
+  'width':'100%',
+  'animation-name':'default',
+  'animation-prop':'background-color',
+  'animation-end':'yellow',
+  'animation-start':'red',  
+// css 
+  'animation-duration': '1.5s', 
+  'animation-timing-function': 'linear',
+  'animation-delay': '0s',
+  'animation-direction': 'alternate',
+  'animation-iteration-count': 'infinite',
+  'animation-fill-mode': 'none',
+  'animation-play-state': 'running'
+};
+/*
+ 
+*/
+
 
 window.onload = function(){
-
-	// New styles for animations
-	css = document.createElement("style")
-	css.type = "text/css";
-	styles = '';
-
+	var css,styles;
 	init();
 	
+//console.log(master["bush"]);
+var css = document.createElement("style");
+    css.type = "text/css";
+var styles = '';
 
-	// Add styles we built
-	if (css.styleSheet) css.styleSheet.cssText = styles;
-	else css.appendChild(document.createTextNode(styles));
+	for (var obj in master){
+		// New styles for animations
+		var _obj = master[obj];
+		
+		
+		styles = '#' + _obj['animation-name'] + '{';
+
+		for (var prop in _obj){
+			var val = _obj[prop];
+			styles += prop + ':' + val + ';';
+		}
+		styles += "}" + parseCss(_obj['animation-name'],
+		                         _obj['animation-prop'],
+		                         _obj['animation-start'],
+		                         _obj['animation-end']);
+		
+		// Add to style sheet
+		if (css.styleSheet) css.styleSheet.cssText = styles;
+		else css.appendChild(document.createTextNode(styles));
+	}
+	// Add css to doc
 	document.getElementsByTagName("head")[0].appendChild(css);
-
-	if (DEBUG) console.log("animBanner init success\n" + styles);
 }
 
 
@@ -41,32 +79,37 @@ function init(){
 
 
 function Animate( d, DATA ){
+
   var animType = DATA[0].toLowerCase();
   var vals = DATA[1].split("_");
-  var dataStr = "";
+  var _ID = d.getAttribute('id');
+  var myObj = {};
 
+ // myObj = Object.assign(defaults);
+  myObj['animation-name'] = _ID;
 
-  var str_property = "background-color";
-  var str_start = "red";
-  var str_finish = "yellow";
-
-
+	if (animType == "scroll_y" || animType == "scroll_x"){
+		var imgChild = d.getElementsByTagName("img")[0];
+		myObj['background-image'] ='url("' + refineSource(imgChild.src) +'"); ';
+		myObj['height'] = + imgChild.clientHeight + "px; ";
+		d.removeChild(imgChild);
+	}
 
   // animation type 
   switch(animType){
   	
   	case "scroll_y":
-  		embedToBG(d);
- 		str_property = "background-position";
-  		str_start = "0px " + vals[0];
-  		str_finish = "0px " + vals[1] ;
+  		//embedToBG(d);
+ 		myObj['animation-prop'] = "background-position";
+  		myObj['animation-start'] = "0px " + vals[0];
+  		myObj['animation-end'] = "0px " + vals[1] ;
   		break;
   	
   	case "scroll_x":
-  		embedToBG(d);
- 		str_property = "background-position";
-  		str_start = vals[0] + " 0px";
-  		str_finish = vals[1] + " 0px";
+  		//embedToBG(d);
+ 		myObj['animation-prop'] = "background-position";
+  		myObj['animation-start'] = vals[0] + " 0px";
+  		myObj['animation-end'] = vals[1] + " 0px";
   		break;
 
   	case "fade":
@@ -81,33 +124,24 @@ function Animate( d, DATA ){
   	 console.log("Error - cant find animation " + animType);
   	 break;
   }//s
-/*
-  animation-duration: 1.5s; 
-  animation-timing-function: ease-out; 
-  animation-delay: 0s;
-  animation-direction: alternate;
-  animation-iteration-count: infinite;
-  animation-fill-mode: none;
-  animation-play-state: running; 
-*/
-  var _ID = d.getAttribute('id');
-  styles += "\n#" + _ID + "{animation-name: " + _ID + ";\n";
-  styles += "animation-duration: " + DATA[2] + ";\n";  
-  styles += "animation-timing-function: linear;\n";
-  styles += "animation-iteration-count: infinite;}\n";
-  styles += parseCss( _ID, str_property, str_start, str_finish );
 
+  if (DATA[2] != null) myObj['animation-duration'] = 		DATA[2];
+  if (DATA[3] != null) myObj['animation-timing-function'] = DATA[3];
+  if (DATA[4] != null) myObj['animation-delay'] = 			DATA[4];
+  if (DATA[5] != null) myObj['animation-direction'] = 		DATA[5];
+  if (DATA[6] != null) myObj['animation-iteration-count'] = DATA[6];
+  if (DATA[7] != null) myObj['animation-fill-mode'] = 		DATA[7];
+  if (DATA[8] != null) myObj['animation-play-state'] = 		DATA[8];
+
+  // Finalize Obj
+  console.log(myObj)
+  master[_ID] = myObj;
 }
 
 // Helpers ---------------------------------------------------------------
 
 function embedToBG(par){
-	var imgChild = par.getElementsByTagName("img")[0];
-	var imgStyle = 'background-image: url("' + refineSource(imgChild.src) +'"); ';
-		imgStyle +="height:" + imgChild.clientHeight + "px; ";
-	// Add to secondary css that we are building
-	styles += "#" + par.getAttribute('id') + "{" + imgStyle + "}";
-	par.removeChild(imgChild);
+
 }
 
 
