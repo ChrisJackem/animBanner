@@ -4,17 +4,22 @@
 	display: block;
 	position: relative;
 	height: 1080px;
+	width: 100%;
 }
-.testContainer > div{
-	
+.testContainer > div{	
 	position: absolute;
 	left: 0px;
 	width: 100%;
 }
 #car{
+	width: 35%;
+	height: 75%;
 	z-index: 99;
 }
-
+#car > *{
+	width: auto;
+	
+}
 
 #ble{
 	background-color: #0D15A4;

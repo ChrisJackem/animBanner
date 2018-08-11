@@ -59,7 +59,7 @@ window.onload = function(){
 		// Add to style sheet
 		if (css.styleSheet) css.styleSheet.insertRule(styles);
 		else css.appendChild(document.createTextNode(styles));
-		//console.log(styles);
+		console.log(styles);
 	}
 	// Add css to doc
 	document.getElementsByTagName("head")[0].appendChild(css);
@@ -67,9 +67,7 @@ window.onload = function(){
 
 
 function init(){	
-	var Ds = Array.prototype.slice.call(document.getElementsByTagName( "div" ) );
-	var Is = Array.prototype.slice.call(document.getElementsByTagName( "img" ) );
-	var animDivs = Ds.concat(Is);
+	var animDivs = Array.prototype.slice.call(document.getElementsByTagName('*'));
 	for (var a in animDivs){
 		var _D = getDivData(animDivs[a]);
 		if ((typeof _D[0]) == "string") Animate(animDivs[a], _D);
@@ -172,6 +170,7 @@ function parseCss( name, prop, sta, fin ){
 }
 
 function getDivData(d){
+	console.log(d.id)
 	var da = d.getAttribute("data-anim");
 	if (da==null) return [null];	
 	var splitted = da.split(" ");
