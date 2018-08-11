@@ -67,7 +67,9 @@ var styles = '';
 
 
 function init(){
-	animDivs = document.getElementsByTagName( "div" )	
+	animDivs = document.getElementsByTagName( "div" );
+	animDivs.concat(document.getElementsByTagName( "img" ));
+	
 	for (var i=0; i<animDivs.length;i++){
 		var _D = getDivData(animDivs[i]);
 		// Make sure we have data
@@ -83,7 +85,7 @@ function Animate( d, DATA ){
   var animType = DATA[0].toLowerCase();
   var vals = DATA[1].split("_");
   var _ID = d.getAttribute('id');
-  var myObj = {};
+  var myObj = (_ID in master) ? master[_ID] : {};
 
   //myObj = Object.assign(defaults);
   myObj['animation-name'] = _ID;
@@ -94,13 +96,32 @@ function Animate( d, DATA ){
   	//==================== Scroll =========================
   	case "scroll_x":
 	case "scroll_y":
-  		var imgChild = d.getElementsByTagName("img")[0];
-		myObj['background-image'] ='url("' + refineSource(imgChild.src) +'"); ';
-		myObj['height'] = + imgChild.clientHeight + "px; ";
+  		var imgChilds = d.getElementsByTagName("img");
+  		var imgChildStr = "";
+  		//console.log(imgChilds)
+  		var imgHeight = imgChilds[0].clientHeight;
+  		for (var imgC in imgChilds){
+  			var sou = imgChilds[imgC].src;
+  			console.log(sou)
+			//imgChildStr += refineSource(imgChilds[imgC].src);
+			//d.removeChild(imgChilds[imgC]);
+			//if (imgChilds.length >= 1 && I < imgChilds.length-1) imgChildStr += ',';
+			
+  		}
+
+  		if (myObj['background-image'] != undefined){
+  			var index = myObj['background-image'].length - 2;
+  			myObj['background-image'] = myObj['background-image'].splice(index,0, "," + imgChildStr);
+  		}else{
+  			myObj['background-image'] ='url("' + imgChildStr +'");';
+  		}
+
+		
+		myObj['height'] = + imgHeight + "px; ";
 		myObj['animation-prop'] = "background-position";
 		//myObj['animation-timing-function'] = 'linear';
 		myObj['animation-iteration-count'] = 'infinite';
-		d.removeChild(imgChild);
+		
 
 	  	if (animType == "scroll_x"){	 		
 	  		myObj['animation-start'] = vals[0] + " 0px";
@@ -136,7 +157,7 @@ function Animate( d, DATA ){
   if (DATA.length > 8) myObj['animation-play-state'] = 		DATA[8];
 
   // Finalize Obj
-  console.log(myObj)
+ // console.log(myObj)
   master[_ID] = myObj;
 }
 
