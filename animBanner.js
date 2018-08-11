@@ -19,10 +19,10 @@ var defaults = {
   'animation-end':'yellow',
   'animation-start':'red',  
 // css 
-  'animation-duration': '1.5s', 
+  'animation-duration': '3s', 
   'animation-timing-function': 'linear',
   'animation-delay': '0s',
-  'animation-direction': 'alternate',
+  'animation-direction': 'forward',
   'animation-iteration-count': 'infinite',
   'animation-fill-mode': 'none',
   'animation-play-state': 'running'
@@ -85,53 +85,55 @@ function Animate( d, DATA ){
   var _ID = d.getAttribute('id');
   var myObj = {};
 
- // myObj = Object.assign(defaults);
+  //myObj = Object.assign(defaults);
   myObj['animation-name'] = _ID;
 
-	if (animType == "scroll_y" || animType == "scroll_x"){
-		var imgChild = d.getElementsByTagName("img")[0];
+  // animation type 
+  switch(animType){  	
+
+  	//==================== Scroll =========================
+  	case "scroll_x":
+	case "scroll_y":
+  		var imgChild = d.getElementsByTagName("img")[0];
 		myObj['background-image'] ='url("' + refineSource(imgChild.src) +'"); ';
 		myObj['height'] = + imgChild.clientHeight + "px; ";
+		myObj['animation-prop'] = "background-position";
+		//myObj['animation-timing-function'] = 'linear';
+		myObj['animation-iteration-count'] = 'infinite';
 		d.removeChild(imgChild);
-	}
 
-  // animation type 
-  switch(animType){
+	  	if (animType == "scroll_x"){	 		
+	  		myObj['animation-start'] = vals[0] + " 0px";
+	  		myObj['animation-end'] = vals[1] + " 0px";
+	  	}else{
+	  		myObj['animation-start'] = "0px " + vals[0];
+	  		myObj['animation-end'] = "0px " + vals[1] ;
+		}
+  	break;
   	
-  	case "scroll_y":
-  		//embedToBG(d);
- 		myObj['animation-prop'] = "background-position";
-  		myObj['animation-start'] = "0px " + vals[0];
-  		myObj['animation-end'] = "0px " + vals[1] ;
-  		break;
-  	
-  	case "scroll_x":
-  		//embedToBG(d);
- 		myObj['animation-prop'] = "background-position";
-  		myObj['animation-start'] = vals[0] + " 0px";
-  		myObj['animation-end'] = vals[1] + " 0px";
-  		break;
-
-  	case "fade":
-
+	//==================== Fade =========================
+  	case "fade":  		
+  		myObj['animation-prop'] = "opacity";
+  		myObj['animation-start'] = vals[0];
+  		myObj['animation-end'] = vals[1];
   		break;
 
   	case "rotate":
 
-  		break;
+  	break;
 
   	default:
   	 console.log("Error - cant find animation " + animType);
   	 break;
   }//s
 
-  if (DATA[2] != null) myObj['animation-duration'] = 		DATA[2];
-  if (DATA[3] != null) myObj['animation-timing-function'] = DATA[3];
-  if (DATA[4] != null) myObj['animation-delay'] = 			DATA[4];
-  if (DATA[5] != null) myObj['animation-direction'] = 		DATA[5];
-  if (DATA[6] != null) myObj['animation-iteration-count'] = DATA[6];
-  if (DATA[7] != null) myObj['animation-fill-mode'] = 		DATA[7];
-  if (DATA[8] != null) myObj['animation-play-state'] = 		DATA[8];
+  if (DATA.length > 2) myObj['animation-duration'] = 	DATA[2];
+  if (DATA.length > 3) myObj['animation-timing-function'] = DATA[3];
+  if (DATA.length > 4) myObj['animation-delay'] = 			DATA[4];
+  if (DATA.length > 5) myObj['animation-direction'] = 		DATA[5];
+  if (DATA.length > 6) myObj['animation-iteration-count'] = DATA[6];
+  if (DATA.length > 7) myObj['animation-fill-mode'] = 		DATA[7];
+  if (DATA.length > 8) myObj['animation-play-state'] = 		DATA[8];
 
   // Finalize Obj
   console.log(myObj)

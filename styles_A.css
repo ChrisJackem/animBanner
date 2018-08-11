@@ -1,8 +1,18 @@
 @charset "utf-8";
 /* CSS Document */
-#bush{
-	background-color: aquamarine;
+.testContainer{
+	display: block;
+	position: relative;
+	height: 1080px;
 }
+.testContainer> div{
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	background-color: burlywood;
+}
+
+
 #ble{
 	background-color: #0D15A4;
 	width: 200px;
