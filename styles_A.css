@@ -5,8 +5,15 @@
 	position: relative;
 	height: 1080px;
 }
-
-
+.testContainer > div{
+	
+	position: absolute;
+	left: 0px;
+	width: 100%;
+}
+#car{
+	z-index: 99;
+}
 
 
 #ble{
