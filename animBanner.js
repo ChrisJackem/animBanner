@@ -105,7 +105,7 @@ function Animate( d, DATA ){
   	
   		//myObj['height'] = + imgHeight + "px; ";
 		myObj['background-image'] ='url("' + imgSrc +'");';		
-		//myObj['background-size'] = 'cover';		
+		myObj['background-size'] = imgWidth + 'px ' + imgHeight + ' px';		
 		myObj['animation-prop'] = "background-position";
 		myObj['animation-timing-function'] = 'linear';
 		myObj['animation-iteration-count'] = 'infinite';
@@ -120,13 +120,12 @@ function Animate( d, DATA ){
 	  	if (animType == "scroll_x"){	 		
 	  		myObj['animation-start'] = vals[0] + " 0px";
 	  		myObj['animation-end'] = vals[1] + " 0px";
-	  		myObj['background-repeat'] ='repeat-x';		
-		
-
-	  	}else{
+	  		myObj['background-repeat'] ='repeat-x';	
+		}else{
 	  		myObj['animation-start'] = "0px " + vals[0];
 	  		myObj['animation-end'] = "0px " + vals[1] ;
 	  		myObj['background-repeat'] ='repeat-y';
+	  		myObj['background-size'] = 'cover';
 		}
   	break;
   	
