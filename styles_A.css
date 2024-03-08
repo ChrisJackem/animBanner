@@ -1,28 +1,61 @@
 @charset "utf-8";
-/* CSS Document */
-.testContainer{
-	display: block;
-	position: relative;
-	height: 800px;
-	width: 100%;
+
+*{
+	padding: 0px;
+	margin: 0px;
 }
-/*.testContainer > div{	
+
+body{
+	display: flex;
+	justify-content: center;
+}
+
+#car-text{
 	position: absolute;
-	left: 0px;
-	width: 100%;
-}*/
+	z-index: 1000;
+	left: 1.5rem;
+	padding-right: 1.5rem;
+	top: 1rem;
+	color: white;
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	text-shadow: 0px 1px 3px black ;
+}
+
+#testContainer{
+	position: relative;
+	padding: 0px;
+	height: 400px;
+	width: 100%; 
+	max-width: 1000px;
+	overflow: hidden;
+	perspective: 500px;	
+}
 
 .filled{
 	width: 100%;
 	height: auto;
 }
+#sky{
+	
+	height: 1000px;
+	width: 100% !important;
+	background-size: auto  !important;
+}
 
-
+#clouds{
+	position: relative;
+	top: -20% !important;
+	left: -10% !important;
+	width: 120% !important;
+	background-size:  auto !important;
+	transform: rotateX(-45deg);
+	opacity: .65;	
+}
 
 
 /*********   Car   ************/
 #car{
-
+	margin-left: 10%;
 	width: auto ;
 	z-index: 99;
 	position: absolute;
@@ -40,18 +73,15 @@
 	height: 100%;
 	
 }
+
+#bush{
+	height: 90% !important;
+}
+
+#bg{
+	height: 150px;
+}
+
 /* Wheel position*/
 #wheelR{ right:7%; }
 #wheelF{ left:12%; }
-
-
-#ble{
-	background-color: #0D15A4;
-	width: 200px;
-	height: 200px;
-}
-#grn{
-	background-color: #3DB912;
-	width: 200px;
-	height: 200px;
-}

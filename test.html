@@ -2,36 +2,39 @@
 <html>
 <head>
 <meta charset="utf-8">
-	<title>Untitled Document</title>
+	<title>Car Demo</title>
 	<link href="styles_A.css" rel="stylesheet" type="text/css">
+
+	<script src="../../styles/bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js"></script>
+	<script src="../../js\jQuery\jquery-3.6.0.min.js"></script>
 	<script src="animBanner.js"></script>
-	
+	<!-- app\static\js\jQuery\jquery-3.6.0.min.js -->
 </head>
 
 <body>
 
-<div class="testContainer">
-	 <image id="sky" data-anim="scroll_Y 1080px_0px 3s linear" src="images/BG_sky.png"></image>
-
-		 <div id="car" data-anim="roll_X 0px_1920px 5s linear">
+<div id="testContainer" >
+	<div id="car-text"><h1>Enjoy the journey.</h1></div>
+	 <image id="sky" data-anim="scroll_Y 1000px_0px 40s linear" src="images/BG_sky.png"></image>
+	 <image id="clouds" data-anim="scroll_Y 1000px_0px 30s linear" src="images/clouds.png"></image>
+	
+		 <div id="car" data-anim="roll_X 0px_960px 5s linear">
 		 	<img src="images/car.png"/>
 		 	<div id="shocks">
 		 		<img id="wheelF" class="wheel" data-anim="rotate 360deg_0deg 1.5s linear" src="images/wheel.png"/>
 		 		<img id="wheelR" class="wheel" data-anim="rotate 360deg_0deg 1.5s linear" src="images/wheel.png"/>
 		 	</div>
-		 </div>
+		 </div>		 
 
-		 
-		 
-  <image id="field" data-anim="scroll_X 0px_1920px 6s linear" src="images/BG_field.png"></image>
-  <image class="bushh" id="bush" data-anim="scroll_X 0px_1920px 5s linear" src="images/BG_bush.png"></image>
-  
+	
+		<image id="field" data-anim="scroll_X 0px_960px 6s linear" src="images/BG_field.png"></image>
+		<image class="bushh" id="bush" data-anim="scroll_X 0px_960px 5s linear" src="images/BG_bush.png"></image>
+	
   		
-  <div><image id="road" data-anim="scroll_X 0px_1920px 4s linear" src="images/BG_road.png"></image></div>
-	</div>	
+  <div><image id="road" data-anim="scroll_X 0px_960px 4s linear" src="images/BG_road.png"></image></div>
+</div>
 
- <div id="ble" data-anim="fade 0_1 3s"></div>
- <div id="grn" data-anim="rotate 100_-100 1s"></div>
-<!-- <div class="anim">&nbsp;</div>-->
+
+
 </body>
 </html>

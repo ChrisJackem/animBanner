@@ -1,6 +1,13 @@
+/* Load Images */
+/* imagesLoaded( document, imLoaded )
+function imLoaded(e=null){
+	console.log("LOAD")
+} */
 
+/* $('#testContainer').ready( ()=> {
+	console.log('LOADED')
+}) */
 
-/*  */
 
 var animDivs = []
 
@@ -60,12 +67,20 @@ window.onload = function(){
 		// Add to style sheet
 		if (css.styleSheet) css.styleSheet.insertRule(styles);
 		else css.appendChild(document.createTextNode(styles));
-		console.log(styles);
+		//console.log(styles);
 	}
 	// Add css to doc
 	document.getElementsByTagName("head")[0].appendChild(css);
+
+	// Update fun
+	//setInterval(Update, 200);
+
 }
 
+/* function Update(){
+	let sky = document.getElementById('sky');
+	let styles = window.getComputedStyle(sky,null).backgroundPosition.trim().split(/\s+/)	
+} */
 
 function init(){	
 	var animDivs = Array.prototype.slice.call(document.getElementsByTagName('*'));
@@ -127,6 +142,12 @@ function Animate( d, DATA ){
 	  		myObj['background-repeat'] ='repeat-y';
 	  		myObj['background-size'] = 'cover';
 		}
+		/* }else{
+	  		myObj['animation-start'] = "0px " + vals[0];
+	  		myObj['animation-end'] = "0px " + vals[1] ;
+	  		myObj['background-repeat'] ='repeat-y';
+	  		myObj['background-size'] = 'cover';
+		} */
   	break;
   	
 	//==================== Fade =========================
@@ -146,7 +167,7 @@ function Animate( d, DATA ){
   	break;
 
   	default:
-  	 console.log("Error - cant find animation " + animType);
+  	 //console.log("Error - cant find animation " + animType);
   	 break;
   }//s
 
@@ -169,8 +190,6 @@ function embedToBG(par){
 
 }
 
-
-
 function refineSource(s){
 	var _spl = s.split("/");
 	var _file = _spl[_spl.length-1];
@@ -187,7 +206,6 @@ function parseCss( name, prop, sta, fin ){
 }
 
 function getDivData(d){
-	console.log(d.id)
 	var da = d.getAttribute("data-anim");
 	if (da==null) return [null];	
 	var splitted = da.split(" ");
