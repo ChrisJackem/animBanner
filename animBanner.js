@@ -1,22 +1,10 @@
-/* Load Images */
-/* imagesLoaded( document, imLoaded )
-function imLoaded(e=null){
-	console.log("LOAD")
-} */
-
-/* $('#testContainer').ready( ()=> {
-	console.log('LOADED')
-}) */
-
-
 var animDivs = []
-
 var css;
 var styles;
-
 var DEBUG = true;
 var curZ = 10;
 var master = {};
+
 var defaults = {
 // custom
   'background-image':'none',
@@ -42,9 +30,7 @@ var exclude_from_css = {
   'animation-start':'X'
 };
 
-
-window.onload = function(){
-	
+window.onload = function(){	
 	init();
 
 	// New styles for animations
@@ -72,15 +58,7 @@ window.onload = function(){
 	// Add css to doc
 	document.getElementsByTagName("head")[0].appendChild(css);
 
-	// Update fun
-	//setInterval(Update, 200);
-
 }
-
-/* function Update(){
-	let sky = document.getElementById('sky');
-	let styles = window.getComputedStyle(sky,null).backgroundPosition.trim().split(/\s+/)	
-} */
 
 function init(){	
 	var animDivs = Array.prototype.slice.call(document.getElementsByTagName('*'));
@@ -185,11 +163,6 @@ function Animate( d, DATA ){
 }
 
 // Helpers ---------------------------------------------------------------
-
-function embedToBG(par){
-
-}
-
 function refineSource(s){
 	var _spl = s.split("/");
 	var _file = _spl[_spl.length-1];
@@ -211,5 +184,3 @@ function getDivData(d){
 	var splitted = da.split(" ");
 	return splitted;
 }
-
-
